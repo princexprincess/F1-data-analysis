@@ -30,10 +30,28 @@ laptime_1000th_race.insert(1,'RaceName',laptime_1000th_race['raceId'])
 laptime_1000th_race['RaceName'].replace(races['raceId'].tolist(),races['name'].tolist(),inplace = True)
 laptime_1000th_race.insert(3,'DriverName',laptime_1000th_race['driverId'])
 laptime_1000th_race['DriverName'].replace(drivers['driverId'].tolist(),drivers['code'].tolist(),inplace = True)
+laptime_1000th_race.to_csv('laptime_1000th_race.csv') # Export data to CSV file
 test = laptime_1000th_race[['DriverName','lap','miliseconds']]
 test_gp = test.pivot(index = 'lap',columns = 'DriverName',values = 'miliseconds')
-test_gp.plot()
-plt.show()
+# test_gp.plot()
+# plt.show()
 
-print(laptime_1000th_race.head())
-print(test.head())
+# Create dataset for Hamilton's laps in China Grand Prix
+
+China_grand_prix = races[races.circuitId == 17].reset_index(drop = True)
+laptime_ham_China = lap_times[lap_times.driverId == 1].reset_index(drop = True)
+laptime_ham_China.insert(1,'RaceName',laptime_ham_China['raceId'])
+laptime_ham_China.insert(1,'year',laptime_ham_China['raceId'])
+laptime_ham_China['RaceName'].replace(races['raceId'].tolist(),races['name'].tolist(),inplace = True)
+laptime_ham_China['year'].replace(races['raceId'].tolist(),races['year'].tolist(),inplace = True)
+laptime_ham_China = laptime_ham_China[laptime_ham_China.RaceName == 'Chinese Grand Prix'].reset_index(drop = True)
+laptime_ham_China.to_csv('laptime_ham_China.csv') # Export data to CSV file
+test = laptime_ham_China[['year','lap','miliseconds']]
+test_gp = test.pivot(index = 'lap',columns = 'year',values = 'miliseconds')
+# test_gp.plot()
+# plt.show()
+
+#Create dataset for 
+
+
+print(laptime_ham_China.head())
